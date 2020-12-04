@@ -1,0 +1,766 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Activity API
+  description: ''
+  contact:
+    name: NETOV Nikolay
+    email: nnetov@dxc.com
+servers:
+  - url: https://diaas-dev.gtaia-test-domain.net/std-dev-lux-13110/insurance
+    description: ''
+paths:
+  /references_wm/activities:
+    parameters:
+      - name: apikey
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: accept
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: acceptLanguage
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Activity Collection
+      summary: GET the Activities Collection
+      description: GET the Activities Collection
+      operationId: activities.__get__activities
+      parameters:
+        - name: w_m_activity$status
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+        - name: _count
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            minimum: 500
+        - name: _start
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+        - name: _num
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: integer
+            minimum: 20
+        - name: _sort
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - w_m_activity$status
+                - '-w_m_activity$status'
+        - name: _embed
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                type: object
+                properties:
+                  _count:
+                    oneOf:
+                      - type: string
+                        pattern: '^\\[0-9]+\\+$'
+                      - type: integer
+                  _links:
+                    type: object
+                    properties:
+                      curies:
+                        $ref: '#/components/schemas/relationLink'
+                      self:
+                        $ref: '#/components/schemas/relationLink'
+                      up:
+                        $ref: '#/components/schemas/relationLink'
+                      first:
+                        $ref: '#/components/schemas/relationLink'
+                      last:
+                        $ref: '#/components/schemas/relationLink'
+                      next:
+                        $ref: '#/components/schemas/relationLink'
+                      prev:
+                        $ref: '#/components/schemas/relationLink'
+                      type:
+                        $ref: '#/components/schemas/relationLink'
+                      dxcrelitem-type:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/relationLink'
+                      item:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/activitiesLink'
+                  _options:
+                    $ref: '#/components/schemas/optionsHypermedia'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+    options:
+      tags:
+        - Activity Collection
+      summary: Return the hypermedia of a Activities Collection
+      description: >-
+        Return the hypermedia of a Activities Collection  The hypermedia will
+        describe what can be done with this resource.
+      operationId: activities.__options__activities
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/optionsHypermedia'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+  '/references_wm/activities/{activitiesId}':
+    parameters:
+      - name: apikey
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: accept
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: acceptLanguage
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - description: activitiesId. This is an internal document id.
+        in: path
+        name: activitiesId
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Activity Document
+      summary: GET the Activities Document
+      description: 'GET the Activities Document identified by {activitiesId}.'
+      operationId: act_activities.__get__activitiesbyID
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/activities'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+    options:
+      tags:
+        - Activity Document
+      summary: Return the hypermedia of a Activities Document
+      description: >-
+        Return the hypermedia of a Activities Document identified by
+        {activitiesId}. The hypermedia will describe what can be done with this
+        resource.
+      operationId: act_activities.__options__activitiesbyID
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/optionsHypermedia'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+  '/references_wm/activities/{activitiesId}/resume_in_aia':
+    parameters:
+      - name: apikey
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: accept
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - name: acceptLanguage
+        in: query
+        description: ''
+        required: true
+        schema:
+          type: string
+      - description: activitiesId. This is an internal document id.
+        in: path
+        name: activitiesId
+        required: true
+        schema:
+          type: string
+    get:
+      tags:
+        - Resume In Aia Activity Bridge resource
+      summary: GET the Resume In Aia Bridge resource
+      description: 'GET the Resume In Aia Bridge resource identified by {activitiesId}.'
+      operationId: act_resume_in_aia.__get__resume_in_aia
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    $ref: '${base}/schemas/system/HALlinkObject'
+                  type:
+                    $ref: '${base}/schemas/system/HALlinkObject'
+                  _options:
+                    $ref: '#/components/schemas/optionsHypermedia'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+    options:
+      tags:
+        - Resume In Aia Activity Bridge resource
+      summary: Return the hypermedia of a Resume In Aia Bridge resource
+      description: >-
+        Return the hypermedia of a Resume In Aia Bridge resource identified by
+        {activitiesId}. The hypermedia will describe what can be done with this
+        resource.
+      operationId: act_resume_in_aia.__options__resume_in_aia
+      responses:
+        '200':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/optionsHypermedia'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+    post:
+      tags:
+        - Resume In Aia Activity Bridge resource
+      summary: POST the Resume In Aia Bridge resource
+      description: 'POST the Resume In Aia Bridge resource identified by {activitiesId}.'
+      operationId: act_resume_in_aia.__post__resume_in_aia
+      responses:
+        '201':
+          description: Request was successful.
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/genericOperationLink'
+        '400':
+          description: Bad Request
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '401':
+          description: Unauthorized
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '403':
+          description: Forbidden
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '404':
+          description: The specified resource was not found
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '500':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '502':
+          description: Internal Server Error
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+        '504':
+          description: Timeout
+          content:
+            application/vnd.hal+json:
+              schema:
+                $ref: '#/components/schemas/outcomeMessage'
+components:
+  schemas:
+    outcomeMessage:
+      type: object
+      properties:
+        outcome:
+          type: string
+        messages:
+          type: array
+          items:
+            type: object
+            properties:
+              context:
+                type: string
+              message:
+                type: string
+              severity:
+                type: string
+      required:
+        - outcome
+        - messages
+    optionsHypermedia:
+      type: object
+      properties:
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/operationLink'
+          description: The hypermedia of this resource
+        title:
+          type: string
+        properties:
+          type: object
+          description: the model of this resource
+      required:
+        - links
+        - title
+        - properties
+    operationLink:
+      type: object
+      description: a link that describes an operation on the resource
+      properties: {}
+    relationLink:
+      type: object
+      description: a link to a Document or to a Collection
+      properties:
+        href:
+          type: string
+          example: 'http://host/path'
+    embeddedRepresentations:
+      type: object
+      description: Embedded resource representations (HAL)
+      allOf:
+        - type: object
+        - $ref: '#/components/schemas/status_report'
+    genericOperationLink:
+      type: object
+      properties:
+        href:
+          type: string
+        name:
+          type: string
+        templated:
+          type: string
+        title:
+          type: string
+        summary:
+          type: object
+          properties:
+            operation_status:
+              type: string
+    activitiesLink:
+      type: object
+      description: How a Activities appears as a collection's item
+      properties:
+        href:
+          $ref: '#/components/schemas/relationLink'
+        title:
+          type: string
+        name:
+          type: string
+        templated:
+          type: boolean
+        summary:
+          type: array
+          items:
+            type: object
+            properties:
+              w_m_activity$identifier:
+                type: string
+                maxLength: 200
+              w_m_activity$no:
+                type: integer
+                maximum: 999999
+    status_report:
+      type: object
+      description: returns consistency status and error messages
+      properties:
+        'dxcaia_status_report':
+          type: object
+          properties:
+            _links:
+              type: object
+              properties:
+                self:
+                  $ref: '#/components/schemas/relationLink'
+                type:
+                  $ref: '#/components/schemas/relationLink'
+                up:
+                  $ref: '#/components/schemas/relationLink'
+            consistent:
+              type: boolean
+              example: true
+            messages:
+              type: array
+              items:
+                type: object
+                properties:
+                  severity:
+                    type: string
+                  context:
+                    type: string
+                  message:
+                    type: string
+    activities:
+      type: object
+      description: This is the Activities document schema model.
+      properties:
+        embeded:
+          $ref: '#/components/schemas/embeddedRepresentations'
+        options:
+          $ref: '#/components/schemas/optionsHypermedia'
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: '#/components/schemas/relationLink'
+            curies:
+              $ref: '#/components/schemas/relationLink'
+            up:
+              $ref: '#/components/schemas/relationLink'
+            type:
+              $ref: '#/components/schemas/relationLink'
+            'dxcaia_status_report':
+              $ref: '#/components/schemas/relationLink'
+            'dxcaia_operations':
+              $ref: '#/components/schemas/relationLink'
+            via:
+              $ref: '#/components/schemas/relationLink'
+        w_m_activity$effective_date:
+          type: string
+          format: date
+          description: >-
+            danish:&ensp;The current historical Effective Date when the Activity
+            has been processed; uk_english:&ensp;The current historical
+            Effective Date when the Activity has been processed; french:&ensp;La
+            Date d'effet historique actuelle � laquelle l'Acte de gestion a �t�
+            trait�; italian:&ensp;The current historical Effective Date when the
+            Activity has been processed; brazil_portuguese:&ensp;The current
+            historical Effective Date when the Activity has been processed;
+            russian:&ensp;The current historical Effective Date when the
+            Activity has been processed; simpl_chinese:&ensp;The current
+            historical Effective Date when the Activity has been processed;
+            spanish:&ensp;The current historical Effective Date when the
+            Activity has been processed
+        w_m_activity$label:
+          type: string
+          maxLength: 100
+        w_m_activity$rejection_reason:
+          type: array
+          items:
+            type: string
+            maxLength: 300
+        w_m_activity$request_date:
+          type: string
+          format: date
+        w_m_activity$status:
+          type: string
+        w_m_activity$update_date:
+          type: string
+          format: date
+        w_m_activity$user:
+          type: string
+          maxLength: 20
+          description: >-
+            danish:&ensp;The User identifier of the administrator who processed
+            the activity; uk_english:&ensp;The User identifier of the
+            administrator who processed the activity; french:&ensp;Code
+            utilisateur du gestionnaire qui a trait� cette activit�;
+            italian:&ensp;The User identifier of the administrator who processed
+            the activity; brazil_portuguese:&ensp;The User identifier of the
+            administrator who processed the activity; russian:&ensp;The User
+            identifier of the administrator who processed the activity;
+            simpl_chinese:&ensp;The User identifier of the administrator who
+            processed the activity; spanish:&ensp;The User identifier of the
+            administrator who processed the activity
+        _embed:
+          type: array
+          items:
+            type: string
