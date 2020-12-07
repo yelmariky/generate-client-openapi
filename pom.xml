@@ -18,7 +18,7 @@
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <!-- RELEASE_VERSION -->
-                <version>5.0.0-SNAPSHOT</version>
+                <version>4.3.1</version>
                 <!-- /RELEASE_VERSION -->
                 <executions>
                     <execution>
@@ -44,13 +44,16 @@
 
                             <!-- override the default library to jersey2 -->
                             <library>spring-boot</library>
-                            <groupId>${project.groupId}</groupId>
+                          <!--  <groupId>${project.groupId}</groupId>
                             <artifactId>${project.artifactId}</artifactId>
+                            -->
                             <generateApis>true</generateApis>
                             <output>${project.build.directory}/generated-sources/remote-openapi</output>
                             <apiPackage>${project.groupId}.${project.artifactId}.api</apiPackage>
                             <modelPackage>${project.groupId}.${project.artifactId}.model</modelPackage>
-                            
+                            <configOptions>
+                                <delegatePattern>true</delegatePattern>
+                            </configOptions>
 <!--                             <invokerPackage>remote.org.openapitools.client</invokerPackage> -->
                         </configuration>
                     </execution>
